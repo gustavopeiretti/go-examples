@@ -4,33 +4,52 @@ import (
 	"fmt"
 )
 
-type User struct {
-	Name, LastName string
+
+// Interface
+type IShape interface {
+	area() float64
 }
 
-func (u User) completeName() string {
-	return fmt.Sprintf("Hi User %s %s", u.Name, u.LastName)
+// Create a Rectangle struct
+type Rectangle struct {
+	Lenght float64
+	Width  float64
 }
 
-type Customer struct {
-	Name, LastName string
+// Create a Square struct
+type Square struct {
+	SideLength float64
 }
 
-func (c Customer) completeName() string {
-	return fmt.Sprintf("Hi Customer %s %s", c.Name, c.LastName)
+// Create a Triangle struct
+type Triangle struct {
+	Base   float64
+	Height float64
 }
 
-type Namer interface {
-	completeName() string
+// Implement IShape.area() for Rectangle
+func (r Rectangle) area() float64 {
+	return r.Lenght * r.Width
 }
 
-func Greet(n Namer) string {
-	return n.completeName()
+// Implement IShape.area() for Square
+func (s Square) area() float64 {
+	return s.SideLength * 2
+}
+
+// Implement IShape.area() for Triangle
+func (t Triangle) area() float64 {
+	return t.Base * t.Height / 2
+}
+
+// Function to show Area
+func ShowArea(s IShape) string {
+	return fmt.Sprintf("Area %f", s.area())
 }
 
 func main() {
-	u := User{"Alber", "Eisteing"}
-	fmt.Println(Greet(u))
-	c := Customer{"Gus", "Peiretti"}
-	fmt.Println(Greet(c))
+	// creating a Rectangle
+	fmt.Println("Rectangle", ShowArea(Rectangle{10, 50}))
+	fmt.Println("Square", ShowArea(Square{40}))
+	fmt.Println("Triangle", ShowArea(Triangle{20,30}))
 }
