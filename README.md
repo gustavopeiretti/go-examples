@@ -1,3 +1,4 @@
 # go-examples
-Go simple examples
-http://gustavopeiretti.com/go-conceptos-basicos-ejemplos/
+Go examples
+Go ejemplos en español
+https://gustavopeiretti.com/category/go/
