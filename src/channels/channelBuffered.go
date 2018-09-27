@@ -2,24 +2,22 @@ package main
 
 import "fmt"
 
-func calc(ch chan <- int, value int) {
-	ch <- value * 10 // write value 10 into channel
+func addOneHundred(message chan <- int, value int) {
+	message <- value + 100
 }
 
 func main() {
+	channel := make(chan int, 2)  // create channel
 
-	channel := make(chan int)  // create channel
-
-	go calc(channel, 10)
-	go calc(channel, 20)
-	go calc(channel, 30)
+	go addOneHundred(channel, 100) // send value 100 to channel
+	go addOneHundred(channel, 200) // send value 200 to channel
+	go addOneHundred(channel, 300) // send value 200 to channel
 
 	v1 := <-channel // read channel
-	v2 := <-channel // read channel
-	v3 := <-channel // read channel
+	//v2 := <-channel // read channel - not mandatory
+	//v3 := <-channel // read channel - not mandatory
 
-	fmt.Println("Values", v1, v2, v3)
-
-	//fmt.Scanln() // wait, press a key
-	//fmt.Println("done")
+	fmt.Println("Value", v1)
+	//fmt.Println("Value", v2)
+	//fmt.Println("Value", v3)
 }
