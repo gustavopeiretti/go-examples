@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func calculate(ch chan <- int, value int) {
-	ch <- value * 10 // write value 10 into channel
+	ch <- value * 10 // multiply value 10 into channel
 }
 
 func main() {
