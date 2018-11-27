@@ -2,12 +2,12 @@ package main
 
 import "fmt"
 
-func sayGoodbay() {
-	fmt.Println("Goodbay")
+func sayGoodbye() {
+	fmt.Println("Goodbye")
 }
 
 func sayHello() {
-	defer sayGoodbay()
+	defer sayGoodbye()
 	fmt.Println("Hello")
 }
 
