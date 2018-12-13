@@ -1,4 +1,3 @@
 # go-examples
-Go examples
-Go ejemplos en español
-https://gustavopeiretti.com/category/go/
+[Go examples](https://gustavopeiretti.com/en)
+[Go ejemplos en español](https://gustavopeiretti.com/es)
