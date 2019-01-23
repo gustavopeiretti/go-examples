@@ -8,6 +8,9 @@ import (
 	"strconv"
 )
 
+var lastUserId int64
+var usersInDatabase = map[int64]User{}
+
 type User struct {
 	Id   int64  `json:"id"`
 	Name string `json:"name"`
@@ -28,12 +31,27 @@ func handleView(w http.ResponseWriter, r *http.Request) {
 		}
 		// simulate search by id and return the user for this id
 		idInt, _ := strconv.ParseInt(id, 10, 64)
-		user := User{
-			Id:   idInt,
-			Name: "gustavo",
-		}
+		user := usersInDatabase[idInt]
 		//
 		jsonUser, err := json.Marshal(user)
+		if err != nil {
+			log.Panic(err)
+		}
+		w.Write(jsonUser)
+	} else {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+	}
+}
+
+func handleViewAll(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		// simulate search all and return the list of users
+		var users []User
+		for _, value := range usersInDatabase {
+			users = append(users, value)
+		}
+		//
+		jsonUser, err := json.Marshal(users)
 		if err != nil {
 			log.Panic(err)
 		}
@@ -52,7 +70,9 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 		// simulate save user
-		user.Id = 1234
+		lastUserId++
+		user.Id = lastUserId
+		usersInDatabase[lastUserId] = user
 		//
 		// return the saved user
 		jsonUser, err := json.Marshal(user)
@@ -68,6 +88,7 @@ func handleSave(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/view", handleView)
+	http.HandleFunc("/all", handleViewAll)
 	http.HandleFunc("/save", handleSave)
 
 	log.Fatal(http.ListenAndServe(":8081", nil))
