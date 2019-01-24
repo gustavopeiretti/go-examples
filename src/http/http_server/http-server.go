@@ -8,8 +8,10 @@ import (
 	"strconv"
 )
 
+// for database simulation
 var lastUserId int64
 var usersInDatabase = map[int64]User{}
+// ..
 
 type User struct {
 	Id   int64  `json:"id"`
